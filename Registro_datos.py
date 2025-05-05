@@ -70,7 +70,7 @@ def Registrar_mesas():
                 if id["numero_mesa"] == numero_mesa:
                     existe_mesa = True
                     break
-        if not existe_mesa:
+        if not existe_mesa and 1<= numero_mesa <= 100 :
             break
         else:
             print("Error, el numero de mesa no es correcto")
