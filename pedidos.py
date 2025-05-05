@@ -82,9 +82,9 @@ def guardar_cliente(numero_mesa, mozo_asignado, lista_platos, lista_postres, lis
     cliente = {
         "N_Mesa": numero_mesa,
         "N_Mozo" : mozo_asignado,
-        "plato" : lista_platos,
-        "postre" : lista_postres,
-        "bebida" : lista_bebidas 
+        "plato" : lista_platos.copy(),
+        "postre" : lista_postres.copy(),
+        "bebida" : lista_bebidas.copy() 
     }
     lista_clientes.append(cliente)
 def mostrar_cliente():
@@ -163,5 +163,98 @@ def registrar_pedido():
             break
     else:
         print("No hay un mozo asignado a esta mesa.")
-    guardar_cliente(numero_mesa, mozo_asignado, plato, postre, bebida)
+    guardar_cliente(numero_mesa, mozo_asignado, lista_platos, lista_postres, lista_bebidas)
+    lista_platos.clear()
+    lista_postres.clear()
+    lista_bebidas.clear()
     
+# TODO Alexis Huaman-----------------------------------------------------------------------------------------
+#---------------------------(ELIMINAR PEDIDOS)
+def eliminar_pedido(): 
+    while True:
+        print("--" * 30)
+        print("<< ELIMINAR PEDIDOS >>".center(60))
+        print("--" * 30)
+        existe_mesa = False
+        existe_cliente = False
+        mesa = int(input("Ingrese el numero de mesa del cliente (si no desea precione 0): "))
+        if mesa == 0:
+            break
+        if 1 <= mesa <= 100: 
+            existe_mesa = True
+            for cliente in lista_clientes:
+                if mesa == cliente['N_Mesa']:
+                    existe_cliente = True
+                    break 
+        if not existe_mesa:
+            print("Error, el numero de mesa no es correcto")
+            continue
+        if not existe_cliente:
+            print("Error, no hay un cliente registrado")
+            continue
+        print("-"* 30)
+        print("Que es lo que desea eliminar: ")
+        print("1. Platos")
+        print("2. Postres")
+        print("3. Bebidas")
+        print("[0. Regresar]")
+        elim = int(input("Ingrese la opcion: "))
+        if elim == 1:
+            if cliente["plato"] != []:
+                print("Platos:")
+                for i, pedido in enumerate(cliente["plato"], start=1):
+                    print(f"{i}. {pedido[0]} con precio: {pedido[1]}")
+                while True:
+                    eliminar = int(input("Ingrese el numero del plato a eliminar (Salir = 0): "))
+                    if eliminar == 0:
+                        print("Regresando...")
+                        break
+                    if 1 <= eliminar <= len(cliente["plato"]):
+                        cliente["plato"].pop(eliminar-1)
+                        print("Plato eliminado correctamente".center(80))
+                        print("-" * 80)
+                    else:
+                        print("Error, el numero de plato no es correcto")
+            else:
+                print("No hay platos registrados para eliminar")
+        elif elim == 2:
+            if cliente["postre"] != []:
+                print("Postres:")
+                for i, pedido in enumerate(cliente["postre"], start=1):
+                    print(f"{i}. {pedido[0]} con precio: {pedido[1]}")
+                while True:
+                    eliminar = int(input("Ingrese el numero del postre a eliminar (Salir = 0): "))
+                    if eliminar == 0:
+                        print("Regresando...")
+                        break
+                    if 1 <= eliminar <= len(cliente["postre"]):
+                        cliente["postre"].pop(eliminar-1)
+                        print("Postre eliminado correctamente".center(80))
+                        print("-" * 80)
+                    else:
+                        print("Error, el numero de postre no es correcto")
+            else:
+                print("No hay postres registrados para eliminar")
+        elif elim == 3:
+            if cliente["bebida"] != []:
+                print("Bebidas:")
+                for i, pedido in enumerate(cliente["bebida"], start=1):
+                    print(f"{i}. {pedido[0]} con precio: {pedido[1]}")
+                while True:
+                    eliminar = int(input("Ingrese el numero de la bebida a eliminar (Salir = 0): "))
+                    print("Si no desea eliminar presione 0")
+                    if eliminar == 0:
+                        print("Regresando...")
+                        break
+                    if 1 <= eliminar <= len(cliente["bebida"]):
+                        cliente["bebida"].pop(eliminar-1)
+                        print("Bebida eliminada correctamente".center(80))
+                        print("-" * 80)
+                    else:
+                        print("Error, el numero de bebida no es correcto")
+            else:
+                print("No hay bebidas registradas para eliminar")
+        elif elim == 0:
+            break
+        else:
+            print("Opcion incorrecta")

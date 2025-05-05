@@ -70,7 +70,7 @@ def Registrar_mesas():
                 if id["numero_mesa"] == numero_mesa:
                     existe_mesa = True
                     break
-        if not existe_mesa:
+        if not existe_mesa and 1<= numero_mesa <= 100 :
             break
         else:
             print("Error, el numero de mesa no es correcto")
@@ -153,7 +153,6 @@ def Asignar_mozo():
     if not Lista_mozos:
         print("No hay mozos registrados")
         return
-    
     id_mozo = input("Ingrese el id del mozo a asignar (4 digitos): ")
     mozo_seleccionado = None
     for id in Lista_mozos:
@@ -543,40 +542,46 @@ def main():
         if opcion == 1:
             print("1. Registrar mesas")
             print("2. Registrar mozos")
+            print("3. Salir")
             while True:
                 try:
                     subopcion = int(input("Seleccione una opción: "))
-                    if 1 <= subopcion <= 2:
-                        break
+                    if 1 <= subopcion <= 3:
+                        if subopcion == 1:   
+                            Registrar_mesas() # 1. Registrar mesas
+                        elif subopcion == 2:
+                            Registrar_mozos() # 2. Registrar mozos
+                        elif subopcion == 3:
+                            break
+                        else:
+                            print("Opcion no valida")
                     else:
                         print("Opción inválida. Intente nuevamente.")
                 except ValueError:
                     print("Entrada inválida. Por favor, ingrese un número.")
-            if subopcion == 1:   
-                Registrar_mesas() # 1. Registrar mesas
-            elif subopcion == 2:
-                Registrar_mozos() # 2. Registrar mozos
-            else:
-                print("Opcion no valida")
+          
                 
         elif opcion == 2: # Asignar mozo a mesa
             print("1. Asignar mozo a mesa")
             print("2. Cambiar mozo de la mesa actual")
+            print("3. Salir ")
             while True:
                 try:
                     subopcion = int(input("Seleccione una opción: "))
-                    if 1 <= subopcion <= 2:
-                        break
+                    if 1 <= subopcion <= 3:
+                        if subopcion == 1: # Asignar mozo a mesa
+                            Asignar_mozo()
+                        elif subopcion == 2: # Cambiar mozo de la mesa actual
+                            Cambiar_mozo()
+                        elif subopcion ==3:
+                            break
+                        else:
+                            print("Opcion no valida")
                     else:
                         print("Opción inválida. Intente nuevamente.")
                 except ValueError:
                     print("Entrada inválida. Por favor, ingrese un número.")
-            if subopcion == 1: # Asignar mozo a mesa
-                Asignar_mozo()
-            elif subopcion == 2: # Cambiar mozo de la mesa actual
-                Cambiar_mozo()
-            else:
-                print("Opcion no valida")
+        
                 
                 
         elif opcion == 3: # Reaizar el pedido 
@@ -605,23 +610,25 @@ def main():
             print("1. Mostrar mesas")
             print("2. Mostrar mozos")
             print("3. Mostrar  pedidos clientes")
+            print("4. Salir")
             while True:
                 try:
                     subopcion = int(input("Seleccione una opción: "))
-                    if 1 <= subopcion <= 3:
-                        break
+                    if 1 <= subopcion <= 4:
+                        if subopcion == 1:
+                            Mostrar_mesas() # Mostrar mesas registradas
+                        elif subopcion == 2:
+                            Mostrar_mozos() # Mostrar mozos registrados
+                        elif subopcion == 3:
+                            mostrar_cliente() # Mostrar los pedidos de los clientes
+                        elif subopcion == 4:
+                            break
+                        else:
+                            print("Opcion no valida")
                     else:
                         print("Opción inválida. Intente nuevamente.")
                 except ValueError:
                     print("Entrada inválida. Por favor, ingrese un número.")
-            if subopcion == 1:
-                Mostrar_mesas() # Mostrar mesas registradas
-            elif subopcion == 2:
-                Mostrar_mozos() # Mostrar mozos registrados
-            elif subopcion == 3:
-                mostrar_cliente() # Mostrar los pedidos de los clientes
-            else:
-                print("Opcion no valida")
         elif opcion == 7:
             print("Saliendo del sistema...")
             break
