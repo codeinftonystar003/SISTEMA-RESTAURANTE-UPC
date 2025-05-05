@@ -3,6 +3,7 @@ from datetime import datetime
 Lista_mesas= []
 Lista_mozos= []
 lista_mesas_asignadas = []
+
 # TODO: Antony Yomar Peña Roña -----------------------------------------------------
 
 def Guardar_mesas(numero_mesa, zona_mesa, capacidad_mesa, estado_mesa):
@@ -40,6 +41,8 @@ def Mostrar_mozos():
 def Registrar_mesas():
     print("Registro de mesas".center(80, "-"))
     print("-" * 80)
+    
+
     while True:
         existe_mesa = False
         numero_mesa = int(input("Ingrese el numero de  mesa a registrar (1 - 100): "))
@@ -48,7 +51,8 @@ def Registrar_mesas():
                 if id["numero_mesa"] == numero_mesa:
                     existe_mesa = True
                     break
-        if not existe_mesa:
+            
+        if  not existe_mesa and 1<= numero_mesa <= 100:
             break
         else:
             print("Error, el numero de mesa no es correcto")
