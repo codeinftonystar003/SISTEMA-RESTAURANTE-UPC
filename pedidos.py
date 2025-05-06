@@ -47,6 +47,7 @@ def carta_postres():
         7: ["Turron", 15.00],
         8: ["King kong de manjar blanco",12.00]
     }
+    
     print("--" * 30)
     print("<< MENU DE POSTRES >>".center(60))
     print("Postres:", " "*30, "Precios:")

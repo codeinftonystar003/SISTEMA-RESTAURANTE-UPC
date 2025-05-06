@@ -12,12 +12,12 @@ def main():
                 else:
                     print("Opción inválida. Intente nuevamente.")
             except ValueError:
-                print("Entrada inválida. Por favor, ingrese un número.")
+                print("Entrada inválida. Por favor, ingrese un número.")   
         if opcion == 1:
-            print("1. Registrar mesas")
-            print("2. Registrar mozos")
-            print("3. Salir")
             while True:
+                print("1. Registrar mesas")
+                print("2. Registrar mozos")
+                print("3. Salir")
                 try:
                     subopcion = int(input("Seleccione una opción: "))
                     if 1 <= subopcion <= 3:
@@ -33,10 +33,10 @@ def main():
                     print("Entrada inválida. Por favor, ingrese un número.")
                 
         elif opcion == 2:  # Asignar mozo a mesa
-            print("1. Asignar mozo a mesa")
-            print("2. Cambiar mozo de la mesa actual")
-            print("3. Salir")
             while True:
+                print("1. Asignar mozo a mesa")
+                print("2. Cambiar mozo de la mesa actual")
+                print("3. Salir")
                 try:
                     subopcion = int(input("Seleccione una opción: "))
                     if subopcion == 1:
@@ -70,16 +70,17 @@ def main():
                 except ValueError:
                     print("Valor incorrecto")
                     
+        
         elif opcion == 4:
             pass
         elif opcion == 5:
             pass
         elif opcion == 6: # Aqui se muestran los reportes de los mozos , mesas y los pedidos de los clientes
-            print("1. Mostrar mesas")
-            print("2. Mostrar mozos")
-            print("3. Mostrar  pedidos clientes")
-            print("4. salir")
             while True:
+                print("1. Mostrar mesas")
+                print("2. Mostrar mozos")
+                print("3. Mostrar  pedidos clientes")
+                print("4. salir")
                 try:
                     subopcion = int(input("Seleccione una opción: "))
                     if subopcion == 1:
@@ -94,8 +95,7 @@ def main():
                         print("La opcion es incorrecta")
                 except ValueError:
                     print("Entrada inválida. Por favor, ingrese un número.")
-        
-                
+                    
         elif opcion == 7:
             print("Saliendo del sistema...")
             break

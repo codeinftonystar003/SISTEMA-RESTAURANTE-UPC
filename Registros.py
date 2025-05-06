@@ -2,7 +2,7 @@ from tabulate import tabulate
 from datetime import datetime
 Lista_mesas= []
 Lista_mozos= []
-lista_mesas_asignadas = []
+
 
 # TODO: Antony Yomar Peña Roña -----------------------------------------------------
 
@@ -55,7 +55,7 @@ def Registrar_mesas():
         if  not existe_mesa and 1<= numero_mesa <= 100:
             break
         else:
-            print("Error, el numero de mesa no es correcto")
+            print("Error, el numero de mesa no esta en rango o ya existe")
     
     while True:
         zona_mesa = input("Ingrese la zona de disponibilidad de la mesa (sala/terraza): ").lower()
@@ -66,8 +66,8 @@ def Registrar_mesas():
             
     while True:
         try:
-            capacidad_mesa = int(input("Ingrese la capacidad de la mesa: "))
-            if 1<= capacidad_mesa <= 20:
+            capacidad_mesa = int(input("Ingrese la capacidad de la mesa (1 - 100): "))
+            if 1<= capacidad_mesa <= 100:
                 break
             else:
                 print("Error, la capacidad de la mesa no es correcta")
@@ -93,7 +93,7 @@ def Registrar_mozos():
     while True:
         existe_mozo = False
         id_mozo = input("Ingrese el id del mozo (4 digitos): ")
-        if len(id_mozo) == 4:
+        if len(id_mozo) == 4 and id_mozo.isdigit():
             for id in Lista_mozos:
                 if id["id_mozo"] == id_mozo:
                     existe_mozo = True
@@ -128,15 +128,20 @@ def Registrar_mozos():
     print("-" * 80)
     print("Mozo registrado correctamente".center(80))
     print("-" * 80)
-    
+
     
 def Asignar_mozo():
     Mostrar_mozos()
     if not Lista_mozos:
         print("No hay mozos registrados")
         return
-    
-    id_mozo = input("Ingrese el id del mozo a asignar (4 digitos): ")
+    while True:
+        id_mozo = input("Ingrese el id del mozo a asignar (4 digitos): ")
+        if len(id_mozo) == 4 and id_mozo.isdigit():
+            break
+        else:
+            print("Error, el id del mozo no es correcto")
+            
     mozo_seleccionado = None
     for id in Lista_mozos:
         if id["id_mozo"] == id_mozo :
@@ -147,10 +152,10 @@ def Asignar_mozo():
                 print("Error, el mozo no esta disponible")
                 return
     else:
-        print("Error, el id del mozo no es correcto")
+        print("Error, el id del mozo no esta registrado")
         return
     
-    if len(mozo_seleccionado["mesa_asignadas"]) >= mozo_seleccionado["capacidad_mozo"]:
+    if len(mozo_seleccionado["mesa_asignadas"]) >= 4:
         print("-" * 80)
         print("Error, el mozo no puede atender más mesas".center(80))
         print("-" * 80)
@@ -165,6 +170,7 @@ def Asignar_mozo():
                 print("Error, el numero de mesa no es correcto")
         except ValueError:
             print("Error en los datos de ingreso")
+    
             
     for id in Lista_mesas:
         if id["numero_mesa"] == numero_mesa:
@@ -178,29 +184,50 @@ def Asignar_mozo():
                         print("Mesa reservada correctamente".center(80))
                         print("-" * 80)
                         mozo_seleccionado["mesa_asignadas"].append(numero_mesa)
-                    else:
+                        
+                           # Cambiar estado del mozo a "inactivo" si tiene 4 mesas asignadas
+                        if len(mozo_seleccionado["mesa_asignadas"]) == 4:
+                            mozo_seleccionado["estado_mozo"] = "inactivo"
+                            print("-" * 80)
+                            print(f"El mozo {mozo_seleccionado['nombre_mozo']} ahora está inactivo.".center(80))
+                            print("-" * 80)
+                            
+                    elif confirmar_pedido == "no":
                         print("Reserva cancelada")
+                    else:
+                        print("Error, la opción no es correcta")
                 else:
                     print("Error, la mesa no esta disponible")
             else:
                 print("Error, la mesa ya está asignada")
-    
+    else:
+        print("La mesa no esta registrada")
    
 
 def Cambiar_mozo():
+    capacidad_mozo = Registrar_mozos()
     Mostrar_mozos()
     if not Lista_mozos:
         print("No hay mozos registrados")
         return
-
-    id_mozo = input("Ingrese el id del mozo a cambiar (4 dígitos): ") # vaidar entrada
-    id_nuevo_mozo = input("Ingrese el id del nuevo mozo (4 dígitos): ") # validar entrada 
-
-    try:
-        numero_mesa = int(input("Ingrese el número de mesa a cambiar mozo (1 - 100): ")) # validar entrada de datos 
-    except ValueError:
-        print("Error en el número de mesa")
-        return
+    while True:
+        id_mozo = int(input("Ingrese el id del mozo a cambiar (4 dígitos): ")) # vaidar entrada
+        id_nuevo_mozo = int(input("Ingrese el id del nuevo mozo (4 dígitos): "))# validar entrada 
+        if 1<= id_mozo <= 1000 and 1<= id_nuevo_mozo <= 1000:
+            break
+        else:
+            print("Error, el id del mozo debe de estar entre 1 y 1000")
+            
+    while True:
+        try:
+            numero_mesa = int(input("Ingrese el número de mesa a cambiar mozo (1 - 100): ")) # validar entrada de datos 
+            if 1<= numero_mesa <= 100:
+                break
+            else:
+                print("Error, el número de mesa debe de estar entre 1 y 100")
+        except ValueError:
+            print("Error en el número de mesa")
+            return
 
     # Buscar el nuevo mozo
     nuevo_mozo = None
@@ -232,7 +259,7 @@ def Cambiar_mozo():
         return
 
     # Asignar la mesa al nuevo mozo
-    if len(nuevo_mozo["mesa_asignadas"]) < nuevo_mozo["capacidad_mozo"]:
+    if len(nuevo_mozo["mesa_asignadas"]) <= capacidad_mozo:
         nuevo_mozo["mesa_asignadas"].append(numero_mesa)
         print("-" * 80)
         print("Cambio de mozo realizado correctamente".center(80))
