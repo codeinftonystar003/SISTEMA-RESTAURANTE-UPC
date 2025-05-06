@@ -1,11 +1,15 @@
 # TODO Alexis Huaman-----------------------------------------------------------------------------------------
 #---------------------------(Registro de pedidos)
 from tabulate import tabulate
+from datetime import datetime
 import Registros as r
 lista_clientes = []
 lista_platos = []
 lista_postres = []
 lista_bebidas = []
+lista_hora_pedido = []
+lista_hora_maxima = []
+lista_hora_entrega = []
 def cartas():
         print("--" * 30)
         print("<< BIENVENIDO AL MENU >>".center(60))
@@ -79,13 +83,16 @@ def carta_bebidas():
 
 
 
-def guardar_cliente(numero_mesa, mozo_asignado, lista_platos, lista_postres, lista_bebidas):
+def guardar_cliente(numero_mesa, mozo_asignado, lista_platos, lista_postres, lista_bebidas, lista_hora_pedido, lista_hora_maxima, lista_hora_entrega): #AÑADIR HORA DE PEDIDO, HORA MAXIMA ,HORA DE ENTREGA
     cliente = {
         "N_Mesa": numero_mesa,
         "N_Mozo" : mozo_asignado,
         "plato" : lista_platos.copy(),
         "postre" : lista_postres.copy(),
-        "bebida" : lista_bebidas.copy() 
+        "bebida" : lista_bebidas.copy(),
+        "hora_pedido" : lista_hora_pedido.copy(),
+        "hora_maxima" : lista_hora_maxima.copy(),
+        "hora_entrega" : lista_hora_entrega.copy()
     }
     lista_clientes.append(cliente)
 def mostrar_cliente():
@@ -97,24 +104,21 @@ def mostrar_cliente():
         
 def registrar_pedido():
     
-    plato = "Sin pedir"
-    postre = "Sin pedir"
-    bebida = "Sin pedir"
-    
-    
-    
     while True:
-        existe_mesa = False
-        numero_mesa = int(input("Ingrese el numero de  mesa a registrar (1 - 100): "))
-        if 1<= numero_mesa <= 100:
-            for  id  in r.Lista_mesas:
-                if id["numero_mesa"] == numero_mesa:
-                    existe_mesa = True
-                    break
-        if existe_mesa:
-            break
-        else:
-            print("Error, el numero de mesa no es correcto")     
+        try:
+            existe_mesa = False
+            numero_mesa = int(input("Ingrese el numero de  mesa a registrar (1 - 100): "))
+            if 1<= numero_mesa <= 100:
+                for  id  in r.Lista_mesas:
+                    if id["numero_mesa"] == numero_mesa:
+                        existe_mesa = True
+                        break
+            if existe_mesa:
+                break
+            else:
+                print("Error, el numero de mesa no es correcto") 
+        except ValueError:
+            print("Valor incorrecto")
     
     while True:
         print("--" * 30)
@@ -123,6 +127,8 @@ def registrar_pedido():
         print("1. Platos")
         print("2. Postres")
         print("3. Bebidas")
+        print("4. Ver hora de pedido")
+        print("5. Registrar hora de entrega")
         print("[0. Salir]")
         opcion = int(input ("Ingresar opcion: "))
         if opcion == 1:
@@ -153,7 +159,55 @@ def registrar_pedido():
                     bebida = bebidas[opcion]
                     lista_bebidas.append(bebida)
                     break
+        elif opcion == 4:
+            fecha_pedido = datetime.now()
+            hora_pedido = fecha_pedido.hour
+            minutos_pedido = fecha_pedido.minute
+            print("--" * 30)
+            print("--" * 30)
+            print("<< HORA DE PEDIDO >>".center(60))
+            print(f"Hora de pedido:  {hora_pedido} horas con {minutos_pedido} minutos.")
+            if minutos_pedido + 30 >= 60:
+                minutos_maximos = (minutos_pedido + 30) - 60
+                hora_maxima = hora_pedido + 1      
+                if hora_maxima > 24:
+                    hora_maxima = (hora_pedido + 1) - 24
+            else:
+                hora_maxima = hora_pedido
+                minutos_maximos = minutos_pedido + 30
+            print("<< HORA DE MAXIMA DE ENTREGA >>".center(60))
+            print(f"Hora maxima de entrega: {hora_maxima} horas con {minutos_maximos} minutos.")
+            print("--" * 30)
+            print("--" * 30)
+            lista_hora_pedido.append((hora_pedido, minutos_pedido))
+            lista_hora_maxima.append((hora_maxima, minutos_maximos))
+            break
+        elif opcion == 5:
+            try:
+                print("-"* 30)
+                print("Ingresar la hora de entrega de su pedido (en formato 24h): ")
+                hora_entrega = int (input("Ingresar hora: "))
+                minuto_entrega = int (input("Ingresar minuto: "))
+                #------------------------------------------------------------------------------------------------------------------(VALIDAR QUE HORA DE ENTREGA SEA MAYOR A HORA DE PEDIDO)
+                #------------------------------------------------------------------------------------------------------------------(VALIDAR QUE HORA DE ENTREGA SEA MAYOR A HORA DE PEDIDO)
+                if hora_entrega >= 0 and hora_entrega <= 24 and minuto_entrega >= 0 and minuto_entrega < 60 :
+                    print("-"*30)
+                    print("<< HORA DE ENTREGA REGISTRADO CORRECTAMENTE >>".center(80))
+                    print("-"*30)
+                    for cliente in lista_clientes:
+                        if cliente["N_Mesa"] == numero_mesa:
+                            cliente["hora_entrega"].append((hora_entrega, minuto_entrega))
+                            break
+                        else:
+                            print("No hay un cliente registrado")
+                else:
+                    print("Hora introducida incorrecta")
+                #------------------------------------------------------------------------------------------------------------------(VALIDAR QUE HORA DE ENTREGA SEA MAYOR A HORA DE PEDIDO)
+                #------------------------------------------------------------------------------------------------------------------(VALIDAR QUE HORA DE ENTREGA SEA MAYOR A HORA DE PEDIDO)
+            except ValueError:
+                print("Valor incorrecto.")
         elif opcion == 0:
+            print("Regresando...")
             break
         else:
             print("Opcion no existente")
@@ -164,10 +218,16 @@ def registrar_pedido():
             break
     else:
         print("No hay un mozo asignado a esta mesa.")
-    guardar_cliente(numero_mesa, mozo_asignado, lista_platos, lista_postres, lista_bebidas)
+        
+    if lista_platos or lista_postres or lista_bebidas or lista_hora_pedido or lista_hora_maxima or lista_hora_entrega:
+        guardar_cliente(numero_mesa, mozo_asignado, lista_platos, lista_postres, lista_bebidas, lista_hora_pedido, lista_hora_maxima, lista_hora_entrega)
+        
     lista_platos.clear()
     lista_postres.clear()
     lista_bebidas.clear()
+    lista_hora_pedido.clear()
+    lista_hora_maxima.clear()
+    lista_hora_entrega.clear()
     
 # TODO Alexis Huaman-----------------------------------------------------------------------------------------
 #---------------------------(ELIMINAR PEDIDOS)
@@ -259,3 +319,9 @@ def eliminar_pedido():
             break
         else:
             print("Opcion incorrecta")
+
+
+        
+        
+        
+        

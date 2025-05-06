@@ -53,23 +53,19 @@ def main():
 
         elif opcion == 3: # Reaizar el pedido 
             while True:
-                print("1. Añadir items")
+                print("1. Añadir pedido y ver datos del pedido")
                 print("2. Eliminar items")
-                print("3. Registrar hora de inicio y final")
                 print("[0. Regresar]")
                 try:
                     opcion = int(input ("Ingresar opcion: "))
-                    if  opcion == 1: # Añadir items de pedido para las mesas
+                    if  opcion == 1:
                         p.registrar_pedido()
                     elif opcion == 2:
                         p.eliminar_pedido()
-                    elif opcion == 3:
-                        print("Funcion de horas")
                     elif opcion == 0:
                         break
                 except ValueError:
                     print("Valor incorrecto")
-                    
         
         elif opcion == 4:
             pass
