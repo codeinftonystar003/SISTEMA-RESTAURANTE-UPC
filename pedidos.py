@@ -3,7 +3,10 @@
 from tabulate import tabulate
 from datetime import datetime
 import Registros as r
+#lista general
 lista_clientes = []
+
+#Listas dentro de los clientes
 lista_platos = []
 lista_postres = []
 lista_bebidas = []
@@ -83,7 +86,7 @@ def carta_bebidas():
 
 
 
-def guardar_cliente(numero_mesa, mozo_asignado, lista_platos, lista_postres, lista_bebidas, lista_hora_pedido, lista_hora_maxima, lista_hora_entrega): #AÑADIR HORA DE PEDIDO, HORA MAXIMA ,HORA DE ENTREGA
+def guardar_cliente(numero_mesa, mozo_asignado, lista_platos, lista_postres, lista_bebidas, lista_hora_pedido, lista_hora_maxima, lista_hora_entrega): 
     cliente = {
         "N_Mesa": numero_mesa,
         "N_Mozo" : mozo_asignado,
@@ -127,10 +130,11 @@ def registrar_pedido():
         print("1. Platos")
         print("2. Postres")
         print("3. Bebidas")
-        print("4. Ver hora de pedido")
+        print("4. Registrar hora de pedido")
         print("5. Registrar hora de entrega")
         print("[0. Salir]")
         opcion = int(input ("Ingresar opcion: "))
+        
         if opcion == 1:
             platos = carta_platos()
             while True:
@@ -141,6 +145,7 @@ def registrar_pedido():
                     break
                 else:
                     print("No existe opcion.")
+                    
         elif opcion == 2:
             postres = carta_postres()
             while True:
@@ -184,6 +189,8 @@ def registrar_pedido():
             break
         elif opcion == 5:
             try:
+                
+                #----------------------------------
                 print("-"* 30)
                 print("Ingresar la hora de entrega de su pedido (en formato 24h): ")
                 hora_entrega = int (input("Ingresar hora: "))
@@ -228,6 +235,7 @@ def registrar_pedido():
     lista_hora_pedido.clear()
     lista_hora_maxima.clear()
     lista_hora_entrega.clear()
+    
     
 # TODO Alexis Huaman-----------------------------------------------------------------------------------------
 #---------------------------(ELIMINAR PEDIDOS)

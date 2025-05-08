@@ -1,7 +1,9 @@
 import Registros as r 
 import pedidos as p
 import menu_principal as m
+import Reportes as rep
 def main():
+    m.caratula() 
     while True:
         m.menu()
         while True:
@@ -15,6 +17,7 @@ def main():
                 print("Entrada inválida. Por favor, ingrese un número.")   
         if opcion == 1:
             while True:
+                print("----------------------------------------")
                 print("1. Registrar mesas")
                 print("2. Registrar mozos")
                 print("3. Salir")
@@ -34,6 +37,7 @@ def main():
                 
         elif opcion == 2:  # Asignar mozo a mesa
             while True:
+                print("----------------------------------------")
                 print("1. Asignar mozo a mesa")
                 print("2. Cambiar mozo de la mesa actual")
                 print("3. Salir")
@@ -53,6 +57,7 @@ def main():
 
         elif opcion == 3: # Reaizar el pedido 
             while True:
+                print("----------------------------------------")
                 print("1. Añadir pedido y ver datos del pedido")
                 print("2. Eliminar items")
                 print("[0. Regresar]")
@@ -66,7 +71,7 @@ def main():
                         break
                 except ValueError:
                     print("Valor incorrecto")
-        
+                    
         elif opcion == 4:
             pass
         elif opcion == 5:
@@ -75,8 +80,10 @@ def main():
             while True:
                 print("1. Mostrar mesas")
                 print("2. Mostrar mozos")
-                print("3. Mostrar  pedidos clientes")
-                print("4. salir")
+                print("3. Mostrar pedidos clientes")
+                print("4. Mostrar mozo con mas pedidos")
+                print("5. Mostrar promedio tiempo espera")
+                print("6. salir")
                 try:
                     subopcion = int(input("Seleccione una opción: "))
                     if subopcion == 1:
@@ -86,12 +93,17 @@ def main():
                     elif subopcion == 3:
                         p.mostrar_cliente() # Mostrar los pedidos de los clientes
                     elif subopcion == 4:
+                        rep.reporte_mozo_mas_pedidos()
+                    elif subopcion == 5:
+                        rep.reporte_tiempo_promedio_espera()
+                    elif subopcion == 6:
                         break
                     else:
                         print("La opcion es incorrecta")
                 except ValueError:
                     print("Entrada inválida. Por favor, ingrese un número.")
-                    
+        
+                
         elif opcion == 7:
             print("Saliendo del sistema...")
             break
