@@ -189,31 +189,45 @@ def registrar_pedido():
             break
         elif opcion == 5:
             try:
-                
-                #----------------------------------
                 print("-"* 30)
                 print("Ingresar la hora de entrega de su pedido (en formato 24h): ")
-                hora_entrega = int (input("Ingresar hora: "))
-                minuto_entrega = int (input("Ingresar minuto: "))
-                #------------------------------------------------------------------------------------------------------------------(VALIDAR QUE HORA DE ENTREGA SEA MAYOR A HORA DE PEDIDO)
-                #------------------------------------------------------------------------------------------------------------------(VALIDAR QUE HORA DE ENTREGA SEA MAYOR A HORA DE PEDIDO)
-                if hora_entrega >= 0 and hora_entrega <= 24 and minuto_entrega >= 0 and minuto_entrega < 60 :
-                    print("-"*30)
-                    print("<< HORA DE ENTREGA REGISTRADO CORRECTAMENTE >>".center(80))
-                    print("-"*30)
+                hora_entrega = int(input("Ingresar hora: "))
+                minuto_entrega = int(input("Ingresar minuto: "))
+                if hora_entrega >= 0 and hora_entrega <= 24 and minuto_entrega >= 0 and minuto_entrega < 60:
                     for cliente in lista_clientes:
                         if cliente["N_Mesa"] == numero_mesa:
-                            cliente["hora_entrega"].append((hora_entrega, minuto_entrega))
+                            if cliente["hora_pedido"]:
+                                hora_pedido, minuto_pedido = cliente["hora_pedido"][-1]
+                                tiempo_pedido = hora_pedido * 60 + minuto_pedido
+                                tiempo_entrega = hora_entrega * 60 + minuto_entrega
+                                if tiempo_entrega > tiempo_pedido and tiempo_entrega <= 1440:
+                                    print("-" * 30)
+                                    print("<< HORA DE ENTREGA REGISTRADO CORRECTAMENTE >>".center(80))
+                                    print("-" * 30)
+                                    cliente["hora_entrega"].append((hora_entrega, minuto_entrega))
+                                else:
+                                    print("-" * 30)
+                                    print("La hora de entrega debe ser mayor a la hora del pedido")
+                                    print("-" * 30)
+                            else:
+                                print("-" * 30)
+                                print("No hay una hora de pedido registrada")
+                                print("-" * 30)
                             break
-                        else:
-                            print("No hay un cliente registrado")
+                    else:
+                        print("-" * 30)
+                        print("No hay un cliente registrado para esta mes")
+                        print("-" * 30)
                 else:
-                    print("Hora introducida incorrecta")
-                #------------------------------------------------------------------------------------------------------------------(VALIDAR QUE HORA DE ENTREGA SEA MAYOR A HORA DE PEDIDO)
-                #------------------------------------------------------------------------------------------------------------------(VALIDAR QUE HORA DE ENTREGA SEA MAYOR A HORA DE PEDIDO)
+                    print("-" * 30)
+                    print("Error con la hora introducida")
+                    print("-" * 30)
             except ValueError:
-                print("Valor incorrecto.")
+                print("-" * 30)
+                print("Valor incorrecto")
+                print("-" * 30)
         elif opcion == 0:
+            print("-" * 30)
             print("Regresando...")
             break
         else:
