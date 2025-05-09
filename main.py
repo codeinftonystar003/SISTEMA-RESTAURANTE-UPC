@@ -2,8 +2,9 @@ import Registros as r
 import pedidos as p
 import menu_principal as m
 import Reportes as rep
+import Calculo as c
 def main():
-    m.caratula() 
+    #m.caratula() 
     while True:
         m.menu()
         while True:
@@ -73,7 +74,17 @@ def main():
                     print("Valor incorrecto")
                     
         elif opcion == 4:
-            pass
+             while True: 
+                print("1. Pago final por mesa")
+                print("2. Salir")
+                try:
+                    opcion=int(input("Digite la opcion: "))
+                    if opcion== 1:
+                        c.pago_final()
+                    elif opcion==2:
+                        break
+                except ValueError:
+                    print("Error, digite un numero")
         elif opcion == 5:
             pass
         elif opcion == 6: # Aqui se muestran los reportes de los mozos , mesas y los pedidos de los clientes
@@ -83,7 +94,8 @@ def main():
                 print("3. Mostrar pedidos clientes")
                 print("4. Mostrar mozo con mas pedidos")
                 print("5. Mostrar promedio tiempo espera")
-                print("6. salir")
+                print("6. Calcular")
+                print("7. salir")
                 try:
                     subopcion = int(input("Seleccione una opción: "))
                     if subopcion == 1:

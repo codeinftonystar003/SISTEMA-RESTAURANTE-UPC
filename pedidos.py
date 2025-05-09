@@ -130,7 +130,7 @@ def registrar_pedido():
         print("1. Platos")
         print("2. Postres")
         print("3. Bebidas")
-        print("4. Registrar hora de pedido")
+        print("4. Registrar hora de pedido (Necesario)")
         print("5. Registrar hora de entrega")
         print("[0. Salir]")
         opcion = int(input ("Ingresar opcion: "))
