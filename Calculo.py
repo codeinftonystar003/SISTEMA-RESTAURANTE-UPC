@@ -8,7 +8,7 @@ lista_bebidas = []
 lista_hora_pedido = []
 lista_hora_maxima = []
 lista_hora_entrega = []
-lista_pagos=[]
+lista_pagos = []
 pagos_finales=[]
 def pago_final():
   print("-"*50)

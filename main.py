@@ -85,9 +85,8 @@ def main():
                         break
                 except ValueError:
                     print("Error, digite un numero")
-        elif opcion == 5:
-            pass
-        elif opcion == 6: # Aqui se muestran los reportes de los mozos , mesas y los pedidos de los clientes
+    
+        elif opcion == 5: # Aqui se muestran los reportes de los mozos , mesas y los pedidos de los clientes
             while True:
                 print("1. Mostrar mesas")
                 print("2. Mostrar mozos")
@@ -116,7 +115,7 @@ def main():
                     print("Entrada inválida. Por favor, ingrese un número.")
         
                 
-        elif opcion == 7:
+        elif opcion == 6:
             print("Saliendo del sistema...")
             break
         else:

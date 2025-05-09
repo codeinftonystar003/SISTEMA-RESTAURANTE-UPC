@@ -164,6 +164,7 @@ def registrar_pedido():
                     bebida = bebidas[opcion]
                     lista_bebidas.append(bebida)
                     break
+                
         elif opcion == 4:
             fecha_pedido = datetime.now()
             hora_pedido = fecha_pedido.hour
@@ -178,6 +179,7 @@ def registrar_pedido():
                 if hora_maxima > 24:
                     hora_maxima = (hora_pedido + 1) - 24
             else:
+                
                 hora_maxima = hora_pedido
                 minutos_maximos = minutos_pedido + 30
             print("<< HORA DE MAXIMA DE ENTREGA >>".center(60))
